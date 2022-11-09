@@ -1,10 +1,13 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset.js";
-import Menu from "../src/components/Menu";
+import Menu from "../src/components/Menu/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
 function HomePage() {
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("")
+  
   return (
     <>
       <CSSReset />
@@ -15,9 +18,9 @@ function HomePage() {
           flex: 1,
         }}
       >
-        <Menu />
+        <Menu valorDoFiltro = {valorDoFiltro} setValorDoFiltro = {setValorDoFiltro} />
         <Header />
-        <Timeline playlists={config.playlists} />
+        <Timeline searchValue = {valorDoFiltro} playlists={config.playlists} />
       </div>
     </>
   );
@@ -32,7 +35,6 @@ const StyledHeader = styled.div`
     border-radius: 50%;
 }
 .user-info {
-    margin-top: 50px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -41,11 +43,18 @@ const StyledHeader = styled.div`
   }
 `;
 
+const StyledBanner = styled.div `
+  background-image: url(${config.banner});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 230px;
+`;
+
 function Header() {
   return (
     <StyledHeader>
-      {/* <img src="#"/> */}
-
+    <StyledBanner />
       <section className="user-info">
         <img src={`https://www.github.com/${config.github}.png`} />
         <div>
@@ -57,22 +66,24 @@ function Header() {
   );
 }
 
-function Timeline(props) {
+function Timeline({searchValue, ...props}) {
   const playlistsNames = Object.keys(props.playlists);
-  console.log(playlistsNames);
 
   return (
     <StyledTimeline>
       {playlistsNames.map((playlistsName) => {
         const videos = props.playlists[playlistsName];
-        console.log(videos);
         return (
-          <section>
+          <section key={playlistsName}>
             <h2>{playlistsName}</h2>
             <div>
-              {videos.map((video) => {
+              {videos.filter((video) => {
+                const titleNormalized = video.title.toLowerCase()
+                const searchValueNormalized = searchValue.toLowerCase()
+                return titleNormalized.includes(searchValueNormalized)
+              }).map((video) => {
                 return (
-                  <a href={video.url}>
+                  <a key={video.url} href={video.url}>
                     <img src={video.thumb} />
                     <span>{video.title}</span>
                   </a>

@@ -4,13 +4,19 @@ import styled from "styled-components"
 const StyledFavoritos = styled.div `
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 0 16px 16px 16px;
     h2 {
         font-size: 16px;
         margin-bottom: 16px;
     }
-    .favoritos{
+    .favoritos {
         display: flex;
+        flex-direction: column;
+        padding: 16px;
+    }
+    .aluratubes{
+        display: flex;
+        flex-direction: row;
         gap: 8px;
     }
     div {
@@ -32,8 +38,9 @@ const StyledFavoritos = styled.div `
 export default function Favoritos () {
     return (
         <StyledFavoritos>
+            <section className="favoritos"> 
             <h2>AluraTubes Favoritos</h2>
-            <section className="favoritos">
+            <div className="aluratubes">
                 <div>
                     <img src={`https://www.github.com/${config.favoritos.user1github}.png`} />
                     <a href= "https://www.youtube.com/alura" target= "_blank"> {config.favoritos.user1} </a>
@@ -42,6 +49,7 @@ export default function Favoritos () {
                     <img src={`https://www.github.com/${config.favoritos.user2github}.png`} />
                     <a href= "https://www.youtube.com/DevSoutinho" target= "_blank"> {config.favoritos.user2} </a>
                 </div>
+            </div>
             </section>
         </StyledFavoritos>
     )

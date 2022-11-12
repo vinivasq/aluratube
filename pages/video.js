@@ -1,16 +1,11 @@
-import React from "react"
-import { ColorModeContext } from "../src/components/Menu/components/ColorMode"
+import DarkModeSwitch from "../src/components/Menu/components/DarkModeSwitch"
 
 export default function Video(){
-    const contexto = React.useContext(ColorModeContext)
 
     return (
         <div>
-            Video!
-            {contexto.mode}
-            <button onClick={() => contexto.toggleMode()}>
-                trocar modo
-            </button>
+
+            <DarkModeSwitch/>
         </div>
     )
 }

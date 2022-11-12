@@ -3,6 +3,7 @@ import config from "../config.json";
 import styled from "styled-components";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
+import Favoritos from "../src/components/Favoritos";
 
 function HomePage() {
   const [valorDoFiltro, setValorDoFiltro] = React.useState("")
@@ -19,6 +20,7 @@ function HomePage() {
         <Menu valorDoFiltro = {valorDoFiltro} setValorDoFiltro = {setValorDoFiltro} />
         <Header />
         <Timeline searchValue = {valorDoFiltro} playlists={config.playlists} />
+        <Favoritos />
       </div>
     </>
   );
@@ -33,7 +35,7 @@ const StyledHeader = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 50%;
-}
+  }
 .user-info {
     display: flex;
     align-items: center;

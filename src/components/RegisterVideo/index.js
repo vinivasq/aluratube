@@ -51,6 +51,10 @@ export default function RegisterVideo () {
                     thumb: getThumbnail(formCadastro.values.url),
                     playlist: "jogos",
                 })
+                .then()
+                .catch((err) => {
+                    console.log(err);
+                 })
                 setFormVisivel(false)
                 formCadastro.clearForm()
             }}>

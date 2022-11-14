@@ -1,5 +1,10 @@
+import { createClient } from "@supabase/supabase-js"
 import React from "react"
 import { StyledRegisterVideo } from "./styles"
+
+function getThumbnail(url) {
+    return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`;
+}
 
 function useForm(propsDoForm) {
     const [values, setValues] = React.useState(propsDoForm.initialValues)
@@ -21,11 +26,14 @@ function useForm(propsDoForm) {
     }
 }
 
+const PROJECT_URL = "https://ygvdjeuwqrxllehzxqmu.supabase.co"
+const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlndmRqZXV3cXJ4bGxlaHp4cW11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgzNzExMzMsImV4cCI6MTk4Mzk0NzEzM30.BM3U6NF7o3pRaOmtZa7Kh3_MKIw2poKFfEnAGuRA7Wk"
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY)
 
 export default function RegisterVideo () {
     const [formVisivel, setFormVisivel] = React.useState(false)
     const formCadastro = useForm({
-        initialValues:  { titulo: "", url: "" }
+        initialValues: { titulo: "", url: "" }
     })
 
     return(
@@ -37,6 +45,12 @@ export default function RegisterVideo () {
             {formVisivel ?  
             <form onSubmit={(e) => {
                 e.preventDefault()
+                supabase.from("video").insert({
+                    title: formCadastro.values.titulo,
+                    url: formCadastro.values.url,
+                    thumb: getThumbnail(formCadastro.values.url),
+                    playlist: "jogos",
+                })
                 setFormVisivel(false)
                 formCadastro.clearForm()
             }}>

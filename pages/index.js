@@ -91,12 +91,12 @@ function Header() {
 }
 
 function Timeline({searchValue, ...props}) {
-  const playlistsNames = Object.keys(props.playlists);
+  const playlistsNames = Object.keys(config.playlists);
 
   return (
     <StyledTimeline>
       {playlistsNames.map((playlistsName) => {
-        const videos = props.playlists[playlistsName];
+        const videos = config.playlists[playlistsName];
         return (
           <section key={playlistsName}>
             <h2>{playlistsName}</h2>
